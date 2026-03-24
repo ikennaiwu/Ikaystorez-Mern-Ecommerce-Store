@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 // the authorization_url Paystack gives back
 // ─────────────────────────────────────────────
 
-const NAIRA_RATE = 1600; // ← update this as exchange rate changes
+const NAIRA_RATE = 1490; // ← update this as exchange rate changes
 
 const OrderSummary = () => {
 	const { total, subtotal, coupon, isCouponApplied, cart } = useCartStore();

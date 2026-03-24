@@ -7,12 +7,14 @@ const categories = [
 	{ href: "/slides", name: "Slides", imageUrl: "/Slides.jpeg" },
 	{ href: "/coperate-shoes", name: "Coperate-Shoes", imageUrl: "/coperate-shoes.jpeg" },
 	{ href: "/sneakers", name: "Sneaker", imageUrl: "/shoes.jpeg" },
-	{ href: "/jeans", name: "Jeans", imageUrl: "/jeans.jpg" },
+	{ href: "/jeans", name: "Jeans", imageUrl: "/Jean.jpeg" },
 	{ href: "/t-shirts", name: "T-shirts", imageUrl: "/T-polo.jpeg" },
 	{ href: "/glasses", name: "Glasses", imageUrl: "/glasses.png" },
 	{ href: "/joggers", name: "Joggers", imageUrl: "/Joggers.jpeg" },
 	{ href: "/Beach-shirts", name: "Beach-shirts", imageUrl: "/Cuba-shirt2.jpeg" },
-	{ href: "/Wrist-watches", name: "Wrist-Watches", imageUrl: "/Watch.jpeg" },
+	{ href: "/Wrist-watches", name: "Wrist-Watches", imageUrl: "/watch.jpeg" },
+	{ href: "/bags", name: "Bags", imageUrl: "/bags.jpg" },
+	{ href: "/bags", name: "Bags", imageUrl: "/bags.jpg" },
 	{ href: "/bags", name: "Bags", imageUrl: "/bags.jpg" },
 ];
 

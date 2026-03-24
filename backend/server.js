@@ -9,6 +9,7 @@ import cartRoutes from "./routes/cart.route.js";
 import couponRoutes from "./routes/coupon.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
+import categoryRoutes from "./routes/category.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -22,8 +23,10 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(express.json()); // global middleware to parse JSON bodies
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded({ limit: "100mb", extended: true }));; // global middleware to parse JSON bodies
 app.use(cookieParser());
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
@@ -31,6 +34,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/coupons" , couponRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/categories", categoryRoutes);
 
 
 
