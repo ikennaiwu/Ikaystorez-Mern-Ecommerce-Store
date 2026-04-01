@@ -1,49 +1,154 @@
-# IkayStorez-MERN-Ecommerce
-# Lab Phase – Project: IkayStore
-Project Overview
+# 🛍️ IkayStorez — Men's Fashion E-Commerce Store
 
-IkayStore is a full-stack e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js), focused on selling men’s clothing and accessories.
+![IkayStorez Homepage](./assets/frontpage.png)
 
-The project aims to provide a smooth online shopping experience for customers while giving store administrators the ability to manage products, orders, and inventory efficiently. It is designed to be scalable, user-friendly, and modern, showcasing practical skills in full-stack web development.
+---
 
-# Project Scope
+## Project Overview
 
-Customers can browse products, view details, add items to a cart, and place orders.
+**IkayStorez** is a full-stack e-commerce platform built with the **MERN stack** (MongoDB, Express.js, React, Node.js), focused on selling men's clothing and accessories.
 
-Admin can add, update, and delete products, manage inventory, and track customer orders.
+The platform provides a smooth online shopping experience for customers while giving store administrators full control to manage products, orders, and inventory efficiently. Designed to be scalable, user-friendly, and modern — showcasing practical skills in full-stack web development.
 
-Support for image uploads for product display.
+---
 
-Backend with RESTful API endpoints and database management using MongoDB.
+##  Features
 
-Technologies & Tools
+### Customer
+- Browse products by category (Slides, Sneakers, Jeans, T-Shirts, Bags, and more)
+- Add products to cart and manage quantities
+- Secure checkout with **Paystack** (NGN & USD supported)
+- Automatic currency detection based on location
+- Coupon/gift card support
+- Purchase success confirmation with confetti 🎉
 
-Frontend: React.js
+###  Admin Dashboard
+- Create, update, and delete products
+- Upload product images via Cloudinary
+- Upload category preview videos
+- View analytics (sales, revenue, users)
+- Toggle featured products
 
-Backend: Node.js + Express.js
+###  Global Payments
+- Nigerian customers pay in **Naira (₦)** via Paystack
+- International customers pay in **USD ($)** via Paystack
+- Automatic IP-based currency detection
 
-Database: MongoDB with Mongoose
+---
 
-Authentication: JWT (optional for admin access)
+##  Technologies & Tools
 
-File Uploads: Multer / Cloudinary
+| Layer | Technology |
+|---|---|
+| Frontend | React.js + Vite |
+| Styling | Tailwind CSS |
+| Backend | Node.js + Express.js |
+| Database | MongoDB + Mongoose |
+| Cache | Redis (Upstash) |
+| Authentication | JWT (Access + Refresh tokens) |
+| File Uploads | Cloudinary |
+| Payments | Paystack |
+| Animation | Framer Motion |
+| State Management | Zustand |
+| Version Control | Git & GitHub |
 
-Version Control: Git & GitHub
+---
 
-# Current Status
+##  Getting Started
 
-Repository initialized with project structure for frontend and backend.
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas account
+- Upstash Redis account
+- Cloudinary account
+- Paystack account
 
-API routes and basic server setup planned.
+### Installation
 
-Will proceed with implementing CRUD operations, connecting frontend, and testing features.
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/ikaystorez.git
+cd ikaystorez
 
-# Next Steps
+# Install backend dependencies
+cd backend && npm install
 
-Complete backend API for products and orders.
+# Install frontend dependencies
+cd ../frontend && npm install
+```
 
-Implement frontend product pages, cart, and checkout functionality.
+### Environment Variables
 
-Integrate image uploads and admin dashboard.
+Create a `.env` file in the root folder:
 
-Test full functionality and deploy the project.
+```env
+PORT=5000
+NODE_ENV=development
+MONGO_URI=your_mongodb_connection_string
+UPSTASH_REDIS_URL=your_upstash_redis_url
+ACCESS_TOKEN_SECRET=your_random_secret
+REFRESH_TOKEN_SECRET=your_random_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+STRIPE_SECRET_KEY=sk_test_your_key
+PAYSTACK_SECRET_KEY=sk_test_your_key
+VITE_PAYSTACK_PUBLIC_KEY=pk_test_your_key
+CLIENT_URL=https://ikaystorez-mern-ecommerce-store.onrender.com
+```
+
+### Running the App
+
+```bash
+# Run backend (from root folder)
+cd backend && npm run dev
+
+# Run frontend (in a new terminal)
+cd frontend && npm run dev
+```
+
+Visit `http://localhost:5173` 🎉
+
+---
+
+##  Project Structure
+
+```
+ikaystorez/
+├── backend/
+│   ├── controllers/    # Route handlers
+│   ├── models/         # Mongoose schemas
+│   ├── routes/         # API routes
+│   ├── middleware/      # Auth middleware
+│   └── lib/            # Stripe, Paystack, Redis, Cloudinary
+├── frontend/
+│   ├── src/
+│   │   ├── components/ # Reusable UI components
+│   │   ├── pages/      # Page components
+│   │   ├── stores/     # Zustand state management
+│   │   └── lib/        # Axios instance
+└── assets/             # Screenshots
+```
+
+---
+
+##  Deployment
+
+- **Frontend** → Cloudflare Pages
+- **Backend** → Render.com
+- **Database** → MongoDB Atlas
+- **Cache** → Upstash Redis
+
+---
+
+## Author
+
+**Ikenna Iwu**
+- Instagram: [@ikaystorez](https://www.instagram.com/ikaystorez)
+- WhatsApp: [+2348169366508](https://wa.me/2348169366508)
+
+---
+
+## 📄 License
+
+This project is for personal and commercial use by IkayStorez. Est. 2019 🖤
