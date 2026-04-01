@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { useImperativeHandle } from "react";
 
 const couponSchema = new mongoose.Schema(
     {
