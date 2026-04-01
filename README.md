@@ -107,7 +107,7 @@ cd backend && npm run dev
 cd frontend && npm run dev
 ```
 
-Visit `http://localhost:5173` 🎉
+Visit `(https://ikaystorez-mern-ecommerce-store.onrender.com)`
 
 ---
 
