@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Upload, Trash2, Video, Loader } from "lucide-react";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
+import { computeRadarPoints } from "recharts/types/polar/Radar";
 
 // List of all your categories
 const CATEGORIES = [
@@ -15,6 +16,8 @@ const CATEGORIES = [
 	"Beach-shirts",
 	"Wrist-watches",
 	"bags",
+	"coperatefits",
+	"underwears"
 ];
 
 const CategoryVideoUpload = () => {
