@@ -65,7 +65,7 @@ const PurchaseSuccessPage = () => {
 		};
 
 		handleSuccess();
-	}, [clearCart]);
+	}, []);
 
 	if (isProcessing) {
 		return (

@@ -220,12 +220,16 @@ export const createPaystackSession = async (req, res) => {
 export const paystackSuccess = async (req, res) => {
 	try {
 		const { reference } = req.body;
-		// reference comes from Paystack after redirect
-		// it's in the URL: /purchase-success?reference=xxx
+				const existingOrder = await Order.findOne({ paystackReference: reference });
+		if (existingOrder) {
+			return res.status(200).json({ success: true, message: "Order already processed", orderId: existingOrder._id });
+		}
 
 		// Step 1: Verify payment with Paystack
-		// LESSON: This is like stripe.checkout.sessions.retrieve(sessionId)
 		const transaction = await verifyTransaction(reference);
+		// reference comes from Paystack after redirect
+		// it's in the URL: /purchase-success?reference=xxx
+		
 
 		// Step 2: Check if payment was successful
 		if (transaction.status === "success") {
