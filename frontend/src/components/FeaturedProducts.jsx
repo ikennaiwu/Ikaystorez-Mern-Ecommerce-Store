@@ -1,162 +1,142 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { PlusCircle, Upload, Loader } from "lucide-react";
-import { useProductStore } from "../stores/useProductStore";
+import { useEffect, useState } from "react";
+import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
+import { useCartStore } from "../stores/useCartStore";
 
-const categories = ["jeans", "t-shirts", "shoes", "glasses", "jackets", "suits", "bags"];
+const FeaturedProducts = ({ featuredProducts }) => {
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [itemsPerPage, setItemsPerPage] = useState(4);
+	const { addToCart } = useCartStore();
 
-const CreateProductForm = () => {
-	const [newProduct, setNewProduct] = useState({
-		name: "",
-		description: "",
-		price: "",
-		category: "",
-		image: "",
-	});
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 640) setItemsPerPage(1);
+			else if (window.innerWidth < 1024) setItemsPerPage(2);
+			else if (window.innerWidth < 1280) setItemsPerPage(3);
+			else setItemsPerPage(4);
+		};
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
-	const { createProduct, loading } = useProductStore();
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			await createProduct(newProduct);
-			setNewProduct({ name: "", description: "", price: "", category: "", image: "" });
-		} catch {
-			console.log("error creating a product");
-		}
+	const nextSlide = () => {
+		setCurrentIndex((prevIndex) => prevIndex + itemsPerPage);
 	};
 
-	const handleImageChange = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-
-			reader.onloadend = () => {
-				setNewProduct({ ...newProduct, image: reader.result });
-			};
-
-			reader.readAsDataURL(file); // base64
-		}
+	const prevSlide = () => {
+		setCurrentIndex((prevIndex) => prevIndex - itemsPerPage);
 	};
+
+	const isStartDisabled = currentIndex === 0;
+	const isEndDisabled = currentIndex >= featuredProducts.length - itemsPerPage;
 
 	return (
-		<motion.div
-			className='bg-gray-800 shadow-lg rounded-lg p-8 mb-8 max-w-xl mx-auto'
-			initial={{ opacity: 0, y: 20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.8 }}
-		>
-			<h2 className='text-2xl font-semibold mb-6 text-grey-300'>Create New Product</h2>
+		<div className='py-12'>
+			<div className='container mx-auto px-4'>
 
-			<form onSubmit={handleSubmit} className='space-y-4'>
-				<div>
-					<label htmlFor='name' className='block text-sm font-medium text-gray-300'>
-						Product Name
-					</label>
-					<input
-						type='text'
-						id='name'
-						name='name'
-						value={newProduct.name}
-						onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2
-						 px-3 text-white focus:outline-none focus:ring-2
-						focus:ring-grey-500 focus:border-grey-500'
-						required
-					/>
-				</div>
-
-				<div>
-					<label htmlFor='description' className='block text-sm font-medium text-gray-300'>
-						Description
-					</label>
-					<textarea
-						id='description'
-						name='description'
-						value={newProduct.description}
-						onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-						rows='3'
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm
-						 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-grey-500 
-						 focus:border-grey-500'
-						required
-					/>
-				</div>
-
-				<div>
-					<label htmlFor='price' className='block text-sm font-medium text-gray-300'>
-						Price
-					</label>
-					<input
-						type='number'
-						id='price'
-						name='price'
-						value={newProduct.price}
-						onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-						step='0.01'
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm 
-						py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-grey-500
-						 focus:border-grey-500'
-						required
-					/>
-				</div>
-
-				<div>
-					<label htmlFor='category' className='block text-sm font-medium text-gray-300'>
-						Category
-					</label>
-					<select
-						id='category'
-						name='category'
-						value={newProduct.category}
-						onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-						className='mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md
-						 shadow-sm py-2 px-3 text-white focus:outline-none 
-						 focus:ring-2 focus:ring-grey-500 focus:border-grey-500'
-						required
-					>
-						<option value=''>Select a category</option>
-						{categories.map((category) => (
-							<option key={category} value={category}>
-								{category}
-							</option>
-						))}
-					</select>
-				</div>
-
-				<div className='mt-1 flex items-center'>
-					<input type='file' id='image' className='sr-only' accept='image/*' onChange={handleImageChange} />
-					<label
-						htmlFor='image'
-						className='cursor-pointer bg-gray-700 py-2 px-3 border border-gray-600 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grey-500'
-					>
-						<Upload className='h-5 w-5 inline-block mr-2' />
-						Upload Image
-					</label>
-					{newProduct.image && <span className='ml-3 text-sm text-gray-400'>Image uploaded </span>}
-				</div>
-
-				<button
-					type='submit'
-					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md 
-					shadow-sm text-sm font-medium text-white bg-grey-600 hover:bg-grey-700 
-					focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grey-500 disabled:opacity-50'
-					disabled={loading}
+				{/* Title */}
+				<h2
+					className='text-center text-2xl sm:text-3xl font-bold mb-8 tracking-widest uppercase'
+					style={{
+						background: "linear-gradient(135deg, #ffffff 0%, #a0aec0 50%, #e2e8f0 100%)",
+						WebkitBackgroundClip: "text",
+						WebkitTextFillColor: "transparent",
+					}}
 				>
-					{loading ? (
-						<>
-							<Loader className='mr-2 h-5 w-5 animate-spin' aria-hidden='true' />
-							Loading...
-						</>
-					) : (
-						<>
-							<PlusCircle className='mr-2 h-5 w-5' />
-							Create Product
-						</>
-					)}
-				</button>
-			</form>
-		</motion.div>
+					Featured
+				</h2>
+
+				<div className='relative'>
+					<div className='overflow-hidden'>
+						<div
+							className='flex transition-transform duration-300 ease-in-out'
+							style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}
+						>
+							{featuredProducts?.map((product) => (
+								<div
+									key={product._id}
+									className='w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2'
+								>
+									<div
+										className='rounded-sm overflow-hidden h-full transition-all duration-300 hover:shadow-2xl'
+										style={{
+											background: "linear-gradient(160deg, #2d2d2d, #3a3a3a)",
+											border: "1px solid #4a4a4a",
+											boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+										}}
+									>
+										{/* Product Image */}
+										<div className='overflow-hidden'>
+											<img
+												src={product.Image || product.image}
+												alt={product.name}
+												className='w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-110'
+											/>
+										</div>
+
+										{/* Product Details */}
+										<div className='p-4'>
+											<h3 className='text-lg font-semibold mb-2 text-white tracking-wide'>
+												{product.name}
+											</h3>
+											<p
+												className='font-bold mb-4 text-lg'
+												style={{ color: "#e2e8f0" }}
+											>
+												${product.price.toFixed(2)}
+											</p>
+											<button
+												onClick={() => addToCart(product)}
+												className='w-full font-semibold py-2 px-4 rounded-sm transition-all duration-300 flex items-center justify-center hover:opacity-80'
+												style={{
+													background: "linear-gradient(135deg, #1f2937, #374151)",
+													border: "1px solid #4b5563",
+													color: "#e2e8f0",
+												}}
+											>
+												<ShoppingCart className='w-5 h-5 mr-2' />
+												Add to Cart
+											</button>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+
+					{/* Prev Button */}
+					<button
+						onClick={prevSlide}
+						disabled={isStartDisabled}
+						className='absolute top-1/2 -left-4 transform -translate-y-1/2 p-2 rounded-sm transition-all duration-300'
+						style={{
+							background: isStartDisabled ? "#2a2a2a" : "linear-gradient(135deg, #374151, #4b5563)",
+							border: "1px solid #4b5563",
+							cursor: isStartDisabled ? "not-allowed" : "pointer",
+							opacity: isStartDisabled ? 0.4 : 1,
+						}}
+					>
+						<ChevronLeft className='w-6 h-6 text-white' />
+					</button>
+
+					{/* Next Button */}
+					<button
+						onClick={nextSlide}
+						disabled={isEndDisabled}
+						className='absolute top-1/2 -right-4 transform -translate-y-1/2 p-2 rounded-sm transition-all duration-300'
+						style={{
+							background: isEndDisabled ? "#2a2a2a" : "linear-gradient(135deg, #374151, #4b5563)",
+							border: "1px solid #4b5563",
+							cursor: isEndDisabled ? "not-allowed" : "pointer",
+							opacity: isEndDisabled ? 0.4 : 1,
+						}}
+					>
+						<ChevronRight className='w-6 h-6 text-white' />
+					</button>
+				</div>
+			</div>
+		</div>
 	);
 };
-export default CreateProductForm;
+
+export default FeaturedProducts;

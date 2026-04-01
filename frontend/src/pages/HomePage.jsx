@@ -14,8 +14,8 @@ const categories = [
 	{ href: "/Beach-shirts", name: "Beach-shirts", imageUrl: "/Cuba-shirt2.jpeg" },
 	{ href: "/Wrist-watches", name: "Wrist-Watches", imageUrl: "/watch.jpeg" },
 	{ href: "/bags", name: "Bags", imageUrl: "/bags.jpg" },
-	{ href: "/bags", name: "Bags", imageUrl: "/bags.jpg" },
-	{ href: "/bags", name: "Bags", imageUrl: "/bags.jpg" },
+	{ href: "/Underwears", name: "Underwears", imageUrl: "/Underwears.jpg" },
+	{ href: "/Coperatefits", name: "Coperatefits", imageUrl: "/Coperatefits.jpg" },
 ];
 
 const HomePage = () => {
